@@ -1,1 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Product</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#4F46E5',
+            secondary: '#10B981',
+            dark: '#1F2937',
+            light: '#F9FAFB'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    
+    .gradient-bg {
+      background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+    }
+    
+    .form-shadow {
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body class="gradient-bg min-h-screen">
+  <!-- Navbar -->
+  <nav class="bg-dark text-white py-4 px-6 flex justify-between items-center shadow-md">
+    <div class="flex items-center">
+      <span class="text-xl font-bold text-secondary">My</span>
+      <span class="text-xl font-bold text-white">Shop</span>
+    </div>
+    <div class="flex space-x-6">
+      <a href="index.html" class="text-secondary font-semibold flex items-center">
+        <i class="fas fa-plus-circle mr-2"></i>Add Product
+      </a>
+      <a href="affiche.html" class="text-white hover:text-secondary transition-colors font-semibold flex items-center">
+        <i class="fas fa-list mr-2"></i>All Products
+      </a>
+    </div>
+  </nav>
 
+  <!-- Main Content -->
+  <main class="container mx-auto px-4 py-8">
+    <div class="max-w-md mx-auto bg-white rounded-xl overflow-hidden form-shadow">
+      <div class="bg-primary text-white py-4 px-6">
+        <h2 class="text-xl font-bold flex items-center">
+          <i class="fas fa-cube mr-2"></i>Add New Product
+        </h2>
+        <p class="text-primary-100 text-sm mt-1">Fill in the details below to add a new product to your store</p>
+      </div>
+      
+      <form id="productForm" class="p-6">
+        <!-- Product Name -->
+        <div class="mb-5">
+          <label for="nameproduct" class="block text-sm font-medium text-gray-700 mb-1">Product Name</label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <i class="fas fa-tag text-gray-400"></i>
+            </div>
+            <input type="text" id="nameproduct" name="nameproduct" 
+                   class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition" 
+                   placeholder="Enter product name" required>
+          </div>
+        </div>
+        
+        <!-- Price -->
+        <div class="mb-5">
+          <label for="price" class="block text-sm font-medium text-gray-700 mb-1">Price ($)</label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <i class="fas fa-dollar-sign text-gray-400"></i>
+            </div>
+            <input type="number" id="price" name="price" 
+                   class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition" 
+                   placeholder="0.00" required step="0.01">
+          </div>
+        </div>
+        
+        <!-- Image URL -->
+        <div class="mb-5">
+          <label for="img" class="block text-sm font-medium text-gray-700 mb-1">Image URL</label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <i class="fas fa-image text-gray-400"></i>
+            </div>
+            <input type="text" id="img" name="img" 
+                   class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition" 
+                   placeholder="https://example.com/image.jpg">
+          </div>
+        </div>
+        
+        <!-- Description -->
+        <div class="mb-6">
+          <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+          <div class="relative">
+            <div class="absolute top-3 left-3 pointer-events-none">
+              <i class="fas fa-align-left text-gray-400"></i>
+            </div>
+            <textarea id="description" name="description" rows="4"
+                      class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition" 
+                      placeholder="Enter product description"></textarea>
+          </div>
+        </div>
+        
+        <!-- Submit Button -->
+        <button type="submit" 
+                class="w-full bg-secondary hover:bg-green-600 text-white py-3 px-4 rounded-lg font-semibold transition-colors shadow-md hover:shadow-lg flex items-center justify-center">
+          <i class="fas fa-plus-circle mr-2"></i>Add Product
+        </button>
+      </form>
+    </div>
+    
+    <!-- Success/Error Notification (hidden by default) -->
+    <div id="notification" class="fixed top-4 right-4 p-4 rounded-lg shadow-lg transform transition-transform duration-300 translate-y-[-100px] max-w-sm">
+      <div class="flex items-start justify-between">
+        <div class="flex items-start">
+          <span id="notificationIcon" class="text-2xl mr-3 mt-0.5"></span>
+          <div>
+            <p id="notificationText" class="font-medium"></p>
+          </div>
+        </div>
+        <button id="closeNotification" class="ml-4 text-gray-500 hover:text-gray-700">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Function to show notification
+    function showNotification(type, message) {
+      const notification = document.getElementById("notification");
+      const notificationIcon = document.getElementById("notificationIcon");
+      const notificationText = document.getElementById("notificationText");
+      
+      // Set notification content based on type
+      if (type === 'success') {
+        notification.classList.remove("bg-red-100", "text-red-800");
+        notification.classList.add("bg-green-100", "text-green-800");
+        notificationIcon.innerHTML = '<i class="fas fa-check-circle"></i>';
+      } else {
+        notification.classList.remove("bg-green-100", "text-green-800");
+        notification.classList.add("bg-red-100", "text-red-800");
+        notificationIcon.innerHTML = type === 'error' 
+          ? '<i class="fas fa-exclamation-circle"></i>' 
+          : '<i class="fas fa-wifi"></i>';
+      }
+      
+      notificationText.textContent = message;
+      
+      // Show notification
+      notification.classList.remove("translate-y-[-100px]");
+      notification.classList.add("translate-y-0");
+      
+      // Auto-hide after 5 seconds (if not manually closed)
+      notification.timeoutId = setTimeout(() => {
+        hideNotification();
+      }, 5000);
+    }
+    
+    // Function to hide notification
+    function hideNotification() {
+      const notification = document.getElementById("notification");
+      notification.classList.remove("translate-y-0");
+      notification.classList.add("translate-y-[-100px]");
+      
+      // Clear any existing timeout
+      if (notification.timeoutId) {
+        clearTimeout(notification.timeoutId);
+      }
+    }
+    
+    // Add event listener for form submission
+    document.getElementById("productForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      const data = {
+        nameproduct: document.getElementById("nameproduct").value,
+        price: document.getElementById("price").value,
+        img: document.getElementById("img").value,
+        description: document.getElementById("description").value
+      };
+
+      try {
+        let response = await fetch("https://det879.app.n8n.cloud/webhook/add", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+        
+        if (response.ok) {
+          showNotification('success', 'Product added successfully!');
+          document.getElementById("productForm").reset();
+        } else {
+          showNotification('error', 'Error sending data. Please try again.');
+        }
+      } catch (error) {
+        console.error(error);
+        showNotification('network', 'Network error. Please check your connection.');
+      }
+    });
+    
+    // Add event listener for close button
+    document.getElementById("closeNotification").addEventListener("click", hideNotification);
+  </script>
+</body>
+</html>
